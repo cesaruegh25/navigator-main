@@ -1,2 +1,2 @@
 # navigator-main
-mecanica de Nav
+mecanica de NavMesh
