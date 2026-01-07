@@ -1099,7 +1099,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1136402529}
   m_Layer: 0
-  m_Name: Point 4
+  m_Name: Point 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1442,7 +1442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1788177223}
   m_Layer: 0
-  m_Name: Point 5
+  m_Name: Point 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1673,8 +1673,8 @@ Transform:
   - {fileID: 1071267554}
   - {fileID: 2119480631}
   - {fileID: 1262056108}
-  - {fileID: 1136402529}
   - {fileID: 1788177223}
+  - {fileID: 1136402529}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1871277387
