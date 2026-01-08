@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     //public bool modoRandom;
     public bool modoClick;
     [SerializeField] private Vector3 max, min;
+    [SerializeField] private GameController game;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     //void Start()
@@ -59,4 +60,14 @@ public class PlayerController : MonoBehaviour
     //{
     //    return new Vector3(Random.Range(min.x, max.x), 0, Random.Range(min.z, max.z));
     //}
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            game.ganarJuego();
+        }
+
+    }
 }
