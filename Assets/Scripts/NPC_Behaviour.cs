@@ -10,11 +10,11 @@ public class NPC_Behaviour : MonoBehaviour
     [SerializeField] private Vector3 destination;
     [Tooltip("Si no se le asigna nada, el movimiento será independiente")]
     [SerializeField] private GameObject player;
+    [SerializeField] private GameController game;
 
     [SerializeField] private int childrenIndex;
     [SerializeField] private Transform path;
     [SerializeField] private bool isNPC;
-    [SerializeField] private float playerDetectionDistance;
     [SerializeField] private bool playerDetected;
     private Coroutine runningPatroll;
     NavMeshAgent agent;
@@ -32,22 +32,13 @@ public class NPC_Behaviour : MonoBehaviour
            
         }
 
-        
-
     }
 
     void Update()
     {
 
-        
-            
-        
 
     }
-
-    
-
-    
 
     // #region y #endregion te permite hacer codigo desplegable sin que sean funciones
     //el nombre de la region se pone despues de #region
@@ -58,8 +49,11 @@ public class NPC_Behaviour : MonoBehaviour
     {
         while (true)
         {
-            agentPlayer.speed = 5;
-            agent.speed = 6;
+            agentPlayer.acceleration = 3;
+            agentPlayer.speed = 4;
+            agent.acceleration = 8;
+            agent.speed = 5;
+            
             destination = player.transform.position;
             GetComponent<NavMeshAgent>().SetDestination(destination);
             yield return new WaitForEndOfFrame();
@@ -74,13 +68,14 @@ public class NPC_Behaviour : MonoBehaviour
 
     IEnumerator Patroll()
     {
-
         destination = path.GetChild(childrenIndex).position;
         GetComponent<NavMeshAgent>().SetDestination(destination);
 
         while(true)
         {
-            agentPlayer.speed = 8;
+            agentPlayer.acceleration = 8;
+            agentPlayer.speed = 5;
+            agent.acceleration = 6;
             agent.speed = 3;
             //Debug.Log("while patroll");
 
@@ -108,41 +103,6 @@ public class NPC_Behaviour : MonoBehaviour
     }
     #endregion
 
-    #region 
-
-    IEnumerator DistanceDetection()
-    {
-        while (true)
-        {
-            if (Vector3.Distance(transform.position, player.transform.position) < playerDetectionDistance)
-            {
-                if (runningPatroll != null)
-                {
-                    StopCoroutine("Patroll");
-                    runningPatroll = null;
-                }
-                    playerDetected = true;
-                    destination = player.transform.position;
-                    GetComponent<NavMeshAgent>().SetDestination(destination);
-                
-            }
-                
-            else 
-            {
-                playerDetected = false;
-                if(runningPatroll == null)
-                {
-                    StartCoroutine("Patroll");
-                }
-                
-            }
-
-            yield return new WaitForSeconds(1);
-        }
-    }
-
-    #endregion
-
     #region Collider Detection
 
     private void OnTriggerEnter(Collider other)
@@ -167,7 +127,6 @@ public class NPC_Behaviour : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-
         if (other.gameObject.CompareTag("Player"))
         {
             StopCoroutine("Follow");
@@ -180,6 +139,15 @@ public class NPC_Behaviour : MonoBehaviour
         }
 
         
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            game.recivirDaño();
+            
+        }
     }
 
     #endregion
