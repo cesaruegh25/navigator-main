@@ -49,10 +49,10 @@ public class NPC_Behaviour : MonoBehaviour
     {
         while (true)
         {
-            agentPlayer.acceleration = 3;
-            agentPlayer.speed = 4;
-            agent.acceleration = 8;
-            agent.speed = 5;
+            setAceleracionPlayer(3);
+            setVelocidadPlayer(4);
+            setAceleracion(8);
+            setVelocidad(5);
             
             destination = player.transform.position;
             GetComponent<NavMeshAgent>().SetDestination(destination);
@@ -73,10 +73,11 @@ public class NPC_Behaviour : MonoBehaviour
 
         while(true)
         {
-            agentPlayer.acceleration = 8;
-            agentPlayer.speed = 5;
-            agent.acceleration = 6;
-            agent.speed = 3;
+            setAceleracionPlayer(8);
+            setVelocidadPlayer(5);
+            setAceleracion(6);
+            setVelocidad(3);
+            
             //Debug.Log("while patroll");
 
             //Debug.Log("Posicion " + transform.position + "; Destino: " + destination);
@@ -152,6 +153,22 @@ public class NPC_Behaviour : MonoBehaviour
 
     #endregion
 
+    public void setVelocidad(int v)
+    {
+        agent.speed = v;
+    }
+    public void setAceleracion(int a)
+    {
+        agent.acceleration = a;
+    }
+    public void setVelocidadPlayer(int v)
+    {
+        agentPlayer.speed = v;
+    }
+    public void setAceleracionPlayer(int a)
+    {
+        agentPlayer.acceleration = a;
+    }
 }
 
 
