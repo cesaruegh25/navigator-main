@@ -474,9 +474,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1278825672}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: resetToMenu
+      - m_Target: {fileID: 1718444113}
+        m_TargetAssemblyTypeName: controlBtn, Assembly-CSharp
+        m_MethodName: mostrarNivelesMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1029,7 +1029,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &510996140
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1366,7 +1366,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 598898866}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1718444113}
+        m_TargetAssemblyTypeName: controlBtn, Assembly-CSharp
+        m_MethodName: salirJuego
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &598898866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1624,9 +1636,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1278825672}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: resetToNivel
+      - m_Target: {fileID: 1718444113}
+        m_TargetAssemblyTypeName: controlBtn, Assembly-CSharp
+        m_MethodName: mostrarNivelesMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1962,7 +1974,7 @@ GameObject:
   - component: {fileID: 752996055}
   m_Layer: 5
   m_Name: Niveles
-  m_TagString: Untagged
+  m_TagString: niveles
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2109,7 +2121,7 @@ GameObject:
   - component: {fileID: 869611949}
   m_Layer: 5
   m_Name: Start menu
-  m_TagString: Untagged
+  m_TagString: menu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2629,16 +2641,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 038f2aa48a955ee43adb9994edad79c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startMenu: {fileID: 869611944}
-  pauseMenu: {fileID: 0}
-  nivelesMenu: {fileID: 752996054}
-  endMenu: {fileID: 1397687881}
-  btnNivelFacil: {fileID: 1495499044}
-  btnNivelMedio: {fileID: 1543440844}
-  btnNivelDificil: {fileID: 1626362702}
   endgame: 0
   win: 1
   escena: 0
+  nivelMedio: 0
+  nivelDificil: 0
 --- !u!4 &1278825673
 Transform:
   m_ObjectHideFlags: 0
@@ -2806,7 +2813,7 @@ GameObject:
   - component: {fileID: 1397687882}
   m_Layer: 5
   m_Name: End menu
-  m_TagString: Untagged
+  m_TagString: endgame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2924,8 +2931,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 510996140}
   - {fileID: 1555720602}
+  - {fileID: 510996140}
   - {fileID: 88673757}
   - {fileID: 1839116842}
   m_Father: {fileID: 0}
@@ -3018,10 +3025,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1278825672}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: nivel
-        m_Mode: 3
+      - m_Target: {fileID: 1718444113}
+        m_TargetAssemblyTypeName: controlBtn, Assembly-CSharp
+        m_MethodName: cargarNivelFacil
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3151,10 +3158,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1278825672}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: nivel
-        m_Mode: 3
+      - m_Target: {fileID: 1718444113}
+        m_TargetAssemblyTypeName: controlBtn, Assembly-CSharp
+        m_MethodName: cargarNivelMedio
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3218,7 +3225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1555720602
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3400,10 +3407,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1278825672}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: nivel
-        m_Mode: 3
+      - m_Target: {fileID: 1718444113}
+        m_TargetAssemblyTypeName: controlBtn, Assembly-CSharp
+        m_MethodName: cargarNivelDificil
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3742,6 +3749,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1658358413}
   m_CullTransparentMesh: 1
+--- !u!1 &1718444110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1718444112}
+  - component: {fileID: 1718444113}
+  m_Layer: 0
+  m_Name: controllerBtn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1718444112
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718444110}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 583.70325, y: 321.43698, z: 25.371468}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1718444113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718444110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1944d4db8b621048b1bef00214ebece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startMenu: {fileID: 869611944}
+  pauseMenu: {fileID: 0}
+  nivelesMenu: {fileID: 752996054}
+  endMenu: {fileID: 1397687881}
+  btnNivelFacil: {fileID: 1495499044}
+  btnNivelMedio: {fileID: 1543440844}
+  btnNivelDificil: {fileID: 1626362702}
+  victoria: {fileID: 1555720601}
+  derrota: {fileID: 510996139}
 --- !u!1 &1839116841
 GameObject:
   m_ObjectHideFlags: 0
@@ -3824,7 +3884,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1839116844}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1718444113}
+        m_TargetAssemblyTypeName: controlBtn, Assembly-CSharp
+        m_MethodName: salirJuego
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1839116844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3874,3 +3946,4 @@ SceneRoots:
   - {fileID: 869611948}
   - {fileID: 752996060}
   - {fileID: 1397687887}
+  - {fileID: 1718444112}

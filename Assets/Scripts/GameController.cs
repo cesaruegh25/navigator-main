@@ -4,20 +4,14 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] GameObject startMenu;
-    public GameObject pauseMenu;
-    public GameObject nivelesMenu;
-    public GameObject endMenu;
-
-    public GameObject btnNivelFacil;
-    public GameObject btnNivelMedio;
-    public GameObject btnNivelDificil;
 
     public bool endgame;
-    public bool win = true;
+    public bool win = false;
 
     public static GameController instance;
     public int escena;
+    public bool nivelMedio = false;
+    public bool nivelDificil = false;
     private int score;
     private LoadSceneMode mode;
 
@@ -33,29 +27,28 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
         }
         reiniciarScore();
+
+        
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         escena = SceneManager.GetActiveScene().buildIndex;
-        startMenu.SetActive(true);
-        nivelesMenu.SetActive(false);
-        endMenu.SetActive(false);
-        btnNivelMedio.SetActive(false);
-        btnNivelDificil.SetActive(false);
-
+        Debug.Log("Escena actual-0:" + escena);
+        nivelMedio = false;
+        nivelDificil = false;
     }
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log("Escena update:" + escena);
     }
 
     public void ganarJuego()
     {
         Debug.Log("Ganar Juego");
-        nivelesMenu.SetActive(true);
+        Debug.Log("Escena actual-1:" + escena);
         winGame();
 
     }
@@ -95,29 +88,23 @@ public class GameController : MonoBehaviour
     }
     public void resetToNivel()
     {
-        startMenu.SetActive(false);
-        nivelesMenu.SetActive(true);
-        escena = 0;
+        Debug.Log("Reiniciando nivel:" + escena);
         SceneManager.LoadScene(escena);
     }
     public void nivel(int nivel)
     {
         Debug.Log("Cargando nivel:" + nivel);
         escena = nivel;
+        Debug.Log("Nivel cargado:" + escena);
         SceneManager.LoadScene(escena);
     }
     
     public void EndGame()
     {
-        escena = 0;
+        Debug.Log("puntuación = " + score);
         SceneManager.LoadScene(escena);
         endgame = true;
 
-        endMenu.SetActive(true);
-        if (win)
-            endMenu.transform.GetChild(0).gameObject.SetActive(true);
-        else
-            endMenu.transform.GetChild(1).gameObject.SetActive(true);
     }
     private void reiniciarScore()
     {
@@ -127,13 +114,14 @@ public class GameController : MonoBehaviour
     {
         //carga pantalla de win
         Debug.Log("Has ganado");
+        Debug.Log("numero de escena-2:" + escena);
         aumentarScore(100);
         if (escena == 1)
         {
             Debug.Log("Cargando siguiente nivel:" + escena);
             escena = 0;
+            nivelMedio = true;
             SceneManager.LoadScene(escena);
-            btnNivelMedio.SetActive(true);
             Debug.Log("Nivel cargado:" + escena);
             Debug.Log("Score actual:" + score);
         }
@@ -141,14 +129,15 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Cargando siguiente nivel:" + escena);
             escena = 0;
+            nivelDificil = true;
             SceneManager.LoadScene(escena);
-            btnNivelDificil.SetActive(true);
             Debug.Log("Nivel cargado:" + escena);
             Debug.Log("Score actual:" + score);
         }
         if (escena == 3)
         {
             Debug.Log("Juego terminado");
+            escena = 0;
             win = true;
             EndGame();
         }
@@ -157,7 +146,9 @@ public class GameController : MonoBehaviour
     {
         //carga pantalla de restart o menu
         Debug.Log("Has perdido");
-        resetToNivel();
+        win = false;
+        escena = 0;
+        EndGame();
         Debug.Log("Score actual:" + score);
     }
 

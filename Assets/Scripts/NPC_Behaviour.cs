@@ -10,7 +10,6 @@ public class NPC_Behaviour : MonoBehaviour
     [SerializeField] private Vector3 destination;
     [Tooltip("Si no se le asigna nada, el movimiento será independiente")]
     [SerializeField] private GameObject player;
-    [SerializeField] private GameController game;
 
     [SerializeField] private int childrenIndex;
     [SerializeField] private Transform path;
@@ -146,7 +145,7 @@ public class NPC_Behaviour : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            game.recivirDaño();
+            GameController.instance.recivirDaño();
             
         }
     }

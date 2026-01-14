@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     //public bool modoRandom;
     public bool modoClick;
     [SerializeField] private Vector3 max, min;
-    [SerializeField] private GameController game;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     //void Start()
@@ -66,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Finish"))
         {
-            game.ganarJuego();
+            GameController.instance.ganarJuego();
         }
 
     }
