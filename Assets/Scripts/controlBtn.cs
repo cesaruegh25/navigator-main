@@ -5,7 +5,6 @@ public class controlBtn : MonoBehaviour
 {
 
     public GameObject startMenu;
-    public GameObject pauseMenu;
     public GameObject nivelesMenu;
     public GameObject endMenu;
 
@@ -34,19 +33,18 @@ public class controlBtn : MonoBehaviour
         if(GameController.instance.endgame)
         {
             mostrarEndMenu();
-            GameController.instance.endgame = false;
+            Debug.Log("Mostrando menu de fin de juego");
+            desactivarBotonesDificultad();
         }
-        if(GameController.instance.nivelMedio)
+        if(GameController.instance.nivelMedio && !btnNivelMedio.activeSelf)
         {
             mostrarNivelesMenu();
             activarBotoneDificultadMedia();
-            GameController.instance.nivelMedio = false;
         }
-        if(GameController.instance.nivelDificil)
+        if(GameController.instance.nivelDificil && !btnNivelDificil.activeSelf)
         {
             mostrarNivelesMenu();
             activarBotoneDificultadDificil();
-            GameController.instance.nivelDificil = false;
         }
     }
 
@@ -63,6 +61,7 @@ public class controlBtn : MonoBehaviour
     }
     public void mostrarEndMenu()
     {
+        //Debug.Log("Dentro de mostrar end menu");
         endMenu.SetActive(true);
         startMenu.SetActive(false);
         nivelesMenu.SetActive(false);
@@ -75,36 +74,20 @@ public class controlBtn : MonoBehaviour
         {
             derrota.SetActive(true);
         }
-            
+        GameController.instance.nivelMedio = false;
+        GameController.instance.nivelDificil = false;
+        GameController.instance.endgame = false;
+
     }
     public void ocultarEndMenu()
     {
         endMenu.SetActive(false);
+        nivelesMenu.SetActive(false);
         startMenu.SetActive(true);
-    }
-    public void pausarJuego()
-    {
-        pauseMenu.SetActive(true);
-        Time.timeScale = 0f;
-    }
-    public void reanudarJuego()
-    {
-        pauseMenu.SetActive(false);
-        Time.timeScale = 1f;
     }
     public void salirJuego()
     {
         Application.Quit();
-    }
-    public void reiniciarNivel()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-    public void cargarNivel(int nivel)
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(nivel);
     }
     public void cargarNivelFacil()
     {
@@ -125,11 +108,6 @@ public class controlBtn : MonoBehaviour
         SceneManager.LoadScene(3);
         GameController.instance.escena = 3;
     }
-    public void volverAlMenuPrincipal()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
-    }
     public void activarBotoneDificultadMedia()
     {
         btnNivelMedio.SetActive(true);
@@ -143,4 +121,5 @@ public class controlBtn : MonoBehaviour
         btnNivelMedio.SetActive(false);
         btnNivelDificil.SetActive(false);
     }
+    
 }

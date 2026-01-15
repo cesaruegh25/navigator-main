@@ -1,6 +1,7 @@
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class GameController : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class GameController : MonoBehaviour
     public bool nivelMedio = false;
     public bool nivelDificil = false;
     private int score;
+    private bool menuPausa = false;
     private LoadSceneMode mode;
+    private GameObject pauseMenu;
 
     private void Awake()
     {
@@ -42,6 +45,21 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (pauseMenu == null && GameController.instance.escena > 0 )
+        {
+            setPauseMenu();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (menuPausa)
+            {
+                reanudarJuego();
+            }
+            else
+            {
+                pausarJuego();
+            }
+        }
         //Debug.Log("Escena update:" + escena);
     }
 
@@ -72,30 +90,29 @@ public class GameController : MonoBehaviour
     {
         score -= cantidad;
     }
-    
-    public void resetGame()
+
+    public void pausarJuego()
     {
-        disminuirScore(20);
-        Debug.Log("Reiniciando nivel:" + escena);
-        SceneManager.LoadScene(escena);
-        Debug.Log("Nivel reiniciado:" + escena);
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
+        menuPausa = true;
+    }
+    public void reanudarJuego()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f;
+        menuPausa = false;
+    }
+    public void setPauseMenu()
+    {
+        pauseMenu = GameObject.Find("PauseMenu");
+        Debug.Log("PausaMenu:" + pauseMenu);
+        pauseMenu.SetActive(false);
     }
     public void resetToMenu()
     {
         reiniciarScore();
         escena = 0;
-        SceneManager.LoadScene(escena);
-    }
-    public void resetToNivel()
-    {
-        Debug.Log("Reiniciando nivel:" + escena);
-        SceneManager.LoadScene(escena);
-    }
-    public void nivel(int nivel)
-    {
-        Debug.Log("Cargando nivel:" + nivel);
-        escena = nivel;
-        Debug.Log("Nivel cargado:" + escena);
         SceneManager.LoadScene(escena);
     }
     
@@ -144,7 +161,6 @@ public class GameController : MonoBehaviour
     }
     private void lose()
     {
-        //carga pantalla de restart o menu
         Debug.Log("Has perdido");
         win = false;
         escena = 0;
@@ -152,4 +168,11 @@ public class GameController : MonoBehaviour
         Debug.Log("Score actual:" + score);
     }
 
+    public void salir() { 
+        Application.Quit();
+    }
+    public void backToNivel() {
+        escena = 0;
+        SceneManager.LoadScene(escena);
+    }
 }
