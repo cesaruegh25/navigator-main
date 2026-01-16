@@ -81,7 +81,7 @@ public class NPC_Behaviour : MonoBehaviour
 
             //Debug.Log("Posicion " + transform.position + "; Destino: " + destination);
 
-            if (Vector3.Distance(transform.position, destination) < 0.5f)
+            if (Vector3.Distance(transform.position, destination) < 2.5f)
             {
 
                 //Debug.Log("if patroll");
