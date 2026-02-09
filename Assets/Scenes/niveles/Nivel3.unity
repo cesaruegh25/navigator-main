@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 175159017}
   - component: {fileID: 175159016}
   - component: {fileID: 175159015}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: final
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4986,7 +4986,7 @@ GameObject:
   - component: {fileID: 1244390974}
   - component: {fileID: 1244390973}
   - component: {fileID: 1244390976}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5102,7 +5102,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 1
@@ -6568,7 +6568,7 @@ GameObject:
   - component: {fileID: 1757423547}
   - component: {fileID: 1757423546}
   - component: {fileID: 1757423545}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: inicio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
