@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         //if (modoClick)
             //{
-                if (Input.GetButtonDown("Fire1"))
+                if (Input.GetButtonDown("Fire1") && GameController.instance.menuPausa == false)
                 {
                     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit = new RaycastHit();

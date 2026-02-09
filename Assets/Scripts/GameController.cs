@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
     public bool nivelMedio = false;
     public bool nivelDificil = false;
     private int score;
-    private bool menuPausa = false;
+    public bool menuPausa = false;
     private LoadSceneMode mode;
     private GameObject pauseMenu;
 
