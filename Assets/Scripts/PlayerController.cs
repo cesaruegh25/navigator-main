@@ -1,65 +1,58 @@
 //using System.Threading.Tasks.Dataflow;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    // movimiento
+    private Vector2 lookInput;
+    public float mouseSensivity = 0.15f;
+    private Vector2 moveInput;
+    private Rigidbody rb;
+    // velocidad
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float crouchMultipler = 0.5f;
+    private bool isCrouch = false;
 
-    [SerializeField] private Vector3 destination;
-    //public bool modoRandom;
-    public bool modoClick;
-    [SerializeField] private Vector3 max, min;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    //void Start()
-    //{
-    //    if (modoRandom)
-    //    {
-    //        destination = RandomDestination();
-    //        GetComponent<NavMeshAgent>().SetDestination(destination);
-    //    }
-    //}
-
-    // Update is called once per frame
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
     void Update()
     {
-        PlayerMove();
+        //PlayerMove();
+        ComprobarCtrl();
+        float yaw = lookInput.x * mouseSensivity;
+        transform.Rotate(0, yaw, 0, Space.Self);
     }
-
-    private void PlayerMove()
+    private void FixedUpdate()
     {
-        //if (modoClick)
-            //{
-                if (Input.GetButtonDown("Fire1") && GameController.instance.menuPausa == false)
-                {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                    RaycastHit hit = new RaycastHit();
+        Vector3 direccion = transform.TransformDirection(
+            new Vector3(moveInput.x, 0, moveInput.y));
+        float currentSpeed = speed;
+        if (isCrouch)
+        {
+            currentSpeed = speed * crouchMultipler;
+        }
 
-                    if(Physics.Raycast(ray, out hit, 1000))
-                    {
-                        GetComponent<NavMeshAgent>().SetDestination(hit.point);
-                    }
-                }
-            //movimiento con click izq (desde la pestaña game)
-        
-            //}
-        
-
-            //if (modoRandom)
-            //{
-            //    if (Vector3.Distance(transform.position, destination) < 0.8f)
-            //    {
-            //        destination = RandomDestination();
-            //        GetComponent<NavMeshAgent>().SetDestination(destination);
-            //    }
-            //}
+        Vector3 velocity = direccion * currentSpeed;
+        Vector3 newVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
+        rb.linearVelocity = newVelocity;
     }
-
-    //private Vector3 RandomDestination()
-    //{
-    //    return new Vector3(Random.Range(min.x, max.x), 0, Random.Range(min.z, max.z));
-    //}
-
+    public void OnMove(InputValue value )
+    {
+        moveInput = value.Get<Vector2>();
+    }
+    public void OnLook(InputValue value)
+    {
+        lookInput = value.Get<Vector2>();
+    }
+    // se ejecuta antes que el start se usa para centrar la camara
+    private void OnEnable()
+    {
+        lookInput = Vector2.zero;
+    }
     private void OnTriggerEnter(Collider other)
     {
 
@@ -68,5 +61,19 @@ public class PlayerController : MonoBehaviour
             GameController.instance.ganarJuego();
         }
 
+    }
+    public void ComprobarCtrl()
+    {
+        bool ctrlPressed = Keyboard.current != null &&
+            (Keyboard.current.rightCtrlKey.isPressed ||
+            Keyboard.current.leftCtrlKey.isPressed);
+        if (ctrlPressed)
+        {
+            isCrouch = true;
+        }
+        else
+        {
+            isCrouch = false;
+        }
     }
 }
