@@ -7,6 +7,7 @@ TagManager:
   - menu
   - niveles
   - endgame
+  - pauseMenu
   layers:
   - Default
   - TransparentFX
