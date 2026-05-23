@@ -16,7 +16,11 @@ public class NPC_Behaviour : MonoBehaviour
     [SerializeField] private Transform path;
     [SerializeField] private bool isNPC;
     [SerializeField] private bool playerDetected;
+
+    private Coroutine runningFollow;
     private Coroutine runningPatroll;
+    private Coroutine losePlayerCoroutine;
+
     NavMeshAgent agent;
     NavMeshAgent agentPlayer;
 
@@ -47,16 +51,17 @@ public class NPC_Behaviour : MonoBehaviour
 
     IEnumerator Follow()
     {
-        yield return new WaitForSeconds(2);
+        setAceleracionPlayer(3);
+        setVelocidadPlayer(4);
+        setAceleracion(8);
+        setVelocidad(5);
+        agent.isStopped = true;
+        yield return new WaitForSeconds(1);
+        agent.isStopped = false;
         while (true)
         {
-            setAceleracionPlayer(3);
-            setVelocidadPlayer(4);
-            setAceleracion(8);
-            setVelocidad(5);
-            
             destination = player.transform.position;
-            GetComponent<NavMeshAgent>().SetDestination(destination);
+            agent.SetDestination(destination);
             yield return new WaitForEndOfFrame();
             yield return new WaitForSeconds(1);
         }
@@ -70,37 +75,33 @@ public class NPC_Behaviour : MonoBehaviour
     IEnumerator Patroll()
     {
         destination = path.GetChild(childrenIndex).position;
-        GetComponent<NavMeshAgent>().SetDestination(destination);
+        agent.SetDestination(destination);
+
+        setAceleracionPlayer(8);
+        setVelocidadPlayer(5);
+        setAceleracion(6);
+        setVelocidad(3);
 
         while(true)
         {
-            setAceleracionPlayer(8);
-            setVelocidadPlayer(5);
-            setAceleracion(6);
-            setVelocidad(3);
-            
-            //Debug.Log("while patroll");
-
-            //Debug.Log("Posicion " + transform.position + "; Destino: " + destination);
-
             if (Vector3.Distance(transform.position, destination) < 2.5f)
             {
-
-                //Debug.Log("if patroll");
-                //Debug.Log(childrenIndex);
-
-                childrenIndex++;
-                childrenIndex = childrenIndex % path.childCount;
-
-                destination = path.GetChild(childrenIndex).position;
-                GetComponent<NavMeshAgent>().SetDestination(destination);
-
-                yield return new WaitForEndOfFrame();
+                agent.isStopped = true;
                 npc.SetBool("pausa", true);
                 yield return new WaitForSeconds(1f);
                 npc.SetBool("pausa", false);
                 
+                childrenIndex++;
+                childrenIndex = childrenIndex % path.childCount;
+
+                destination = path.GetChild(childrenIndex).position;
+                agent.isStopped = false;
+                agent.SetDestination(destination);
+
+                yield return new WaitForEndOfFrame();
+                
             }
+            yield return new WaitForSeconds(2f);
         }
     }
     #endregion
@@ -114,15 +115,19 @@ public class NPC_Behaviour : MonoBehaviour
         {
             if (runningPatroll != null)
             {
-
-                StopCoroutine("Patroll");
+                StopCoroutine(runningPatroll);
                 runningPatroll = null;
 
             }
+            if (losePlayerCoroutine != null)
+            {
+                StopCoroutine(losePlayerCoroutine);
+                losePlayerCoroutine = null;
+            }
             npc.SetTrigger("Run");
             playerDetected = true;
-            StartCoroutine("Follow");
-
+            if (runningFollow == null)
+                runningFollow = StartCoroutine(Follow());
         }
     
     }
@@ -130,23 +135,34 @@ public class NPC_Behaviour : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            StopCoroutine("Follow");
+            losePlayerCoroutine = StartCoroutine(LosePlayer());
+        }        
+    }
+    IEnumerator LosePlayer()
+    {
+        // Sigue persiguiendo 3 segundos más
+        yield return new WaitForSeconds(3f);
+
+        if (runningFollow != null)
+        {
+            StopCoroutine(runningFollow);
+            runningFollow = null;
             playerDetected = false;
-            
-            if(runningPatroll == null)
-            {
-                npc.SetTrigger("Walk");
-                runningPatroll = StartCoroutine("Patroll");
-            }
         }
 
+        npc.SetTrigger("Walk");
         
+        if (runningPatroll == null)
+        {
+            runningPatroll = StartCoroutine(Patroll());
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Debug.Log(GameController.instance);
             GameController.instance.recivirDaño();
             
         }
