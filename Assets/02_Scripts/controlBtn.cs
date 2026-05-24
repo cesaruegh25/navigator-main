@@ -8,6 +8,7 @@ public class controlBtn : MonoBehaviour
     public GameObject startMenu;
     public GameObject nivelesMenu;
     public GameObject endMenu;
+    public GameObject controles;
 
     public GameObject btnNivelFacil;
     public GameObject btnNivelMedio;
@@ -52,6 +53,16 @@ public class controlBtn : MonoBehaviour
             mostrarNivelesMenu();
             activarBotoneDificultadDificil();
         }
+    }
+    public void mostrarControles()
+    {
+        controles.SetActive(true);
+        startMenu.SetActive(false);
+    }
+    public void ocultarControles()
+    {
+        controles.SetActive(false);
+        startMenu.SetActive(true);
     }
 
     public void mostrarNivelesMenu()
@@ -98,7 +109,9 @@ public class controlBtn : MonoBehaviour
     public void cargarNivelFacil()
     {
         Time.timeScale = 1f;
+        TimerManager.Instance.resetTimer(60f);
         SceneManager.LoadScene(1);
+        TimerManager.Instance.TimerStart(true);
         GameController.instance.escena = 1;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -107,7 +120,9 @@ public class controlBtn : MonoBehaviour
     public void cargarNivelMedio()
     {
         Time.timeScale = 1f;
+        TimerManager.Instance.resetTimer(60f);
         SceneManager.LoadScene(2);
+        TimerManager.Instance.TimerStart(true);
         GameController.instance.escena = 2;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -115,7 +130,9 @@ public class controlBtn : MonoBehaviour
     public void cargarNivelDificil()
     {
         Time.timeScale = 1f;
+        TimerManager.Instance.resetTimer(45f);
         SceneManager.LoadScene(3);
+        TimerManager.Instance.TimerStart(true);
         GameController.instance.escena = 3;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

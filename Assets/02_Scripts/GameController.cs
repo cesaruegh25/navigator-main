@@ -25,13 +25,13 @@ public class GameController : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(pauseMenu);
         }
         else
         {
             Destroy(gameObject);
         }
         reiniciarScore();
-        DontDestroyOnLoad(pauseMenu);
 
     }
 
@@ -64,6 +64,7 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("Ganar Juego");
         Debug.Log("Escena actual-1:" + escena);
+        TimerManager.Instance.TimerStart(false);
         winGame();
 
     }
@@ -158,8 +159,9 @@ public class GameController : MonoBehaviour
             EndGame();
         }
     }
-    private void lose()
+    public void lose()
     {
+        TimerManager.Instance.TimerStart(false);
         Debug.Log("Has perdido");
         win = false;
         escena = 0;

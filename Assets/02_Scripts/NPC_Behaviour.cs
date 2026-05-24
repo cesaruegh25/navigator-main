@@ -16,6 +16,7 @@ public class NPC_Behaviour : MonoBehaviour
     [SerializeField] private Transform path;
     [SerializeField] private bool isNPC;
     [SerializeField] private bool playerDetected;
+    [SerializeField] private AudioSource audioSource;
 
     private Coroutine runningFollow;
     private Coroutine runningPatroll;
@@ -125,6 +126,7 @@ public class NPC_Behaviour : MonoBehaviour
                 losePlayerCoroutine = null;
             }
             npc.SetTrigger("Run");
+            audioSource.Play();
             playerDetected = true;
             if (runningFollow == null)
                 runningFollow = StartCoroutine(Follow());
