@@ -1,7 +1,5 @@
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 using Cursor = UnityEngine.Cursor;
 
 public class GameController : MonoBehaviour
