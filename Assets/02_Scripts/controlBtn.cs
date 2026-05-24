@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class controlBtn : MonoBehaviour
 {
@@ -14,12 +15,15 @@ public class controlBtn : MonoBehaviour
     public GameObject victoria;
     public GameObject derrota;
 
+    private Image imagenNiveles;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         startMenu.SetActive(true);
         nivelesMenu.SetActive(false);
+        imagenNiveles = nivelesMenu.GetComponent<Image>();
+        imagenNiveles.color = new Color32(255, 255, 255, 255);
         endMenu.SetActive(false);
         btnNivelMedio.SetActive(false);
         btnNivelDificil.SetActive(false);
@@ -119,15 +123,18 @@ public class controlBtn : MonoBehaviour
     public void activarBotoneDificultadMedia()
     {
         btnNivelMedio.SetActive(true);
+        imagenNiveles.color = new Color32(255, 170, 170, 255);
     }
     public void activarBotoneDificultadDificil()
     {
         btnNivelDificil.SetActive(true);
+        imagenNiveles.color = new Color32(255, 88, 88, 255);
     }
     public void desactivarBotonesDificultad()
     {
         btnNivelMedio.SetActive(false);
         btnNivelDificil.SetActive(false);
+        imagenNiveles.color = new Color32(255, 255, 255, 255);
     }
     
 }
