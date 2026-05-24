@@ -24,4 +24,4 @@ El objetivo del proyecto es implementar enemigos con distintos **patrones de mov
 - Organización del código para sistemas de comportamiento.
 
 ## Estado del proyecto
-Proyecto académico en curso
+Proyecto académico finalizado
